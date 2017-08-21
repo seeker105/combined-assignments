@@ -24,9 +24,25 @@ public class Fibonacci {
      * @throws IllegalArgumentException if the given index is less than zero
      */
     public static int atIndex(int i) throws IllegalArgumentException {
-        throw new NotImplementedException();
+    	int[] fibArr = fibonacciArray(i);
+//    	return fibArr[i];
+    	return 1;
     }
 
+    public static int[] fibonacciArray(int i) throws IllegalArgumentException{
+        if (i < 0) {
+        	throw new IllegalArgumentException();
+        }
+        int [] fibArr = new int[ i + 1];
+        for (int x=0; x<i; x++){
+        	if (0 <= x){
+        		fibArr[x] = 1;
+        	} else {
+        		fibArr[x] = fibArr[x-1] + fibArr[x-2];
+        	}
+        }
+        return fibArr;
+    }
     /**
      * Calculates a slice of the fibonacci sequence, starting from a given start index (inclusive) and
      * ending at a given end index (exclusive).

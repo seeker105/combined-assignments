@@ -26,7 +26,10 @@ public class FizzBuzz {
      * @throws IllegalArgumentException if b is zero
      */
     public static boolean divides(int a, int b) throws IllegalArgumentException {
-        throw new NotImplementedException();
+    	if (b == 0){
+    		throw new IllegalArgumentException();
+    	}
+        return a % b == 0;
     }
 
     /**
@@ -41,7 +44,20 @@ public class FizzBuzz {
      * @return a message according to the format above, or null if n is not divisible by either 3 or 5
      */
     public static String message(int n) {
-        throw new NotImplementedException();
+        String fizz="";
+        String buzz="";
+        if (n % 3 == 0) {
+        	fizz ="Fizz";
+        }
+        if (n % 5 == 0) {
+        	buzz = "Buzz";
+        }
+        String result = fizz + buzz;
+        if (result.length() == 0) {
+        	return null;
+        } else {
+        	return n + ": " + result;
+        }
     }
 
     /**
@@ -49,13 +65,34 @@ public class FizzBuzz {
      * If there is no message for an individual number (i.e., `message(n)` returns null),
      * it should be excluded from the resulting array.
      *
-     * @param start the number to start with (inclusive)
+     * @param start the number t o start with (inclusive)
      * @param end the number to end with (exclusive)
      * @return an array of divisibility messages
      * @throws IllegalArgumentException if the given end is less than the given start
      */
     public static String[] messages(int start, int end) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        if (end < start) {
+        	throw new IllegalArgumentException();
+        }
+        int length = end - start;
+//        int[] nums = new int[length];
+        int num;
+        int index = 0;
+        String[] tempArr = new String[length];
+        String msg;
+        for (int x=0; x<length; x++){
+        	num = x + start;
+        	msg = message(num);
+        	if (msg != null){
+        		tempArr[index] = msg;
+        		index++;
+        	}
+        }
+        String[] divMsgs = new String[index];
+        for (int x = 0; x < index; x++){
+        	divMsgs[x] = tempArr[x];
+        }
+        return divMsgs;
     }
 
     /**
@@ -63,7 +100,10 @@ public class FizzBuzz {
      * the relevant messages to sysout
      */
     public static void main(String[] args) {
-        throw new NotImplementedException();
+        String[] msgs = messages(1, 115);
+        for (int x=0; x<msgs.length; x++){
+        	System.out.println(msgs[x]);
+        }
     }
 
 }
