@@ -1,6 +1,5 @@
 package com.cooksys.ftd.assignments.objects;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class SimplifiedRational implements IRational {
 	
@@ -23,7 +22,7 @@ public class SimplifiedRational implements IRational {
         	b = a % b;
         	a = temp;
         }
-        return Math.abs(a);
+        return a;
     }
 
     /**
@@ -43,14 +42,9 @@ public class SimplifiedRational implements IRational {
         if ( denominator == 0){
         	throw new IllegalArgumentException();
         }
-        int gComDen = gcd(numerator, denominator);
-        int newNumerator = numerator/gComDen;
-        int newDenominator = denominator/gComDen;
-        int[] result = new int[2];
-        result[0] = newNumerator;
-        result[1] = newDenominator;
-        return result;
-//        return new int[]{numerator/gComDen, denominator/gComDen};
+        int greatestComDen = gcd(Math.abs(numerator), Math.abs(denominator));
+
+        return new int[]{numerator/greatestComDen, denominator/greatestComDen};
     }
 
     /**
@@ -141,6 +135,11 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public String toString() {
-        throw new NotImplementedException();
+        String sign = "";
+        if ( numerator < 0 != denominator < 0){
+        	sign = "-";
+        }
+        
+        return sign + Math.abs(numerator) + "/" + Math.abs(denominator);
     }
 }
