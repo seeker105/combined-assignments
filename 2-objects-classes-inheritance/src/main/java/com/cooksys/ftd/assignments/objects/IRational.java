@@ -144,7 +144,7 @@ interface IRational {
 	 *             if that is null or if the numerator of that is 0
 	 */
 	default IRational div(IRational that) throws IllegalArgumentException {
-		if ( (that == null) || (that.getNumerator()==0) ){
+		if ( that == null || that.getNumerator()==0 ){
 			throw new IllegalArgumentException();
 		}
 		int n1, n2, d1, d2;
