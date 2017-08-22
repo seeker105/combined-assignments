@@ -3,6 +3,8 @@ package com.cooksys.ftd.assignments.objects;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Rational implements IRational {
+	int numerator, denominator;
+	
     /**
      * Constructor for rational values of the type:
      * <p>
@@ -12,10 +14,15 @@ public class Rational implements IRational {
      *
      * @param numerator   the numerator of the rational value
      * @param denominator the denominator of the rational value
+     * @return 
      * @throws IllegalArgumentException if the given denominator is 0
      */
     public Rational(int numerator, int denominator) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        if (denominator == 0){
+        	throw new IllegalArgumentException();
+        }
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
     /**
@@ -23,7 +30,7 @@ public class Rational implements IRational {
      */
     @Override
     public int getNumerator() {
-        throw new NotImplementedException();
+        return numerator;
     }
 
     /**
@@ -31,7 +38,7 @@ public class Rational implements IRational {
      */
     @Override
     public int getDenominator() {
-        throw new NotImplementedException();
+        return denominator;
     }
 
     /**
@@ -47,7 +54,10 @@ public class Rational implements IRational {
      */
     @Override
     public Rational construct(int numerator, int denominator) throws IllegalArgumentException {
-        throw new NotImplementedException();
+    	if (denominator == 0){
+    		throw new IllegalArgumentException();
+    	}
+    	return new Rational(numerator, denominator);
     }
 
     /**
@@ -58,7 +68,14 @@ public class Rational implements IRational {
      */
     @Override
     public boolean equals(Object obj) {
-        throw new NotImplementedException();
+    	if ( !(obj instanceof Rational) ){
+    		return false;
+    	}
+    	Rational rat = (Rational)obj;
+    	if ( numerator != rat.getNumerator() || denominator != rat.getDenominator()){
+    		return false;
+    	}
+    	return true;
     }
 
     /**
@@ -70,6 +87,10 @@ public class Rational implements IRational {
      */
     @Override
     public String toString() {
-        throw new NotImplementedException();
+        String sign="";
+        if (numerator<0 != denominator<0){
+        	sign = "-";
+        }
+        return sign + Math.abs(numerator) + "/" + Math.abs(denominator);
     }
 }
