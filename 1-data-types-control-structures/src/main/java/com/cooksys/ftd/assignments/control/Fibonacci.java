@@ -24,25 +24,14 @@ public class Fibonacci {
      * @throws IllegalArgumentException if the given index is less than zero
      */
     public static int atIndex(int i) throws IllegalArgumentException {
-    	int[] fibArr = fibonacciArray(i);
-//    	return fibArr[i];
-    	return 1;
+    	if (i < 0){
+    		throw new IllegalArgumentException();
+    	}
+    	int[] fibArr = fibonacci(i+1);
+    	return fibArr[i];
     }
 
-    public static int[] fibonacciArray(int i) throws IllegalArgumentException{
-        if (i < 0) {
-        	throw new IllegalArgumentException();
-        }
-        int [] fibArr = new int[ i + 1];
-        for (int x=0; x<i; x++){
-        	if (0 <= x){
-        		fibArr[x] = 1;
-        	} else {
-        		fibArr[x] = fibArr[x-1] + fibArr[x-2];
-        	}
-        }
-        return fibArr;
-    }
+
     /**
      * Calculates a slice of the fibonacci sequence, starting from a given start index (inclusive) and
      * ending at a given end index (exclusive).
@@ -54,7 +43,18 @@ public class Fibonacci {
      *                                  given end is less than the given start
      */
     public static int[] slice(int start, int end) throws IllegalArgumentException {
-        throw new NotImplementedException();
+    	if (start<0 || end<0){
+    		throw new IllegalArgumentException();
+    	}
+    	if (end < start){
+    		throw new IllegalArgumentException();
+    	}
+        int[] fibArr = fibonacci(end);
+        int[] result = new int[end-start];
+        for (int x=0; x < end-start; x++){
+        	result[x] = fibArr[x+start];
+        }
+        return result;
     }
 
     /**
@@ -65,6 +65,17 @@ public class Fibonacci {
      * @throws IllegalArgumentException if the given count is negative
      */
     public static int[] fibonacci(int count) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        if (count < 0) {
+        	throw new IllegalArgumentException();
+        }
+        int [] fibArr = new int[count];
+        for (int x=0; x<count; x++){
+        	if (x < 2){
+        		fibArr[x] = 1;
+        	} else {
+        		fibArr[x] = fibArr[x-1] + fibArr[x-2];
+        	}
+        }
+        return fibArr;
     }
 }
