@@ -1,5 +1,7 @@
 package com.cooksys.ftd.assignments.control;
 
+import java.util.Arrays;
+
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -88,10 +90,8 @@ public class FizzBuzz {
         		index++;
         	}
         }
-        String[] divMsgs = new String[index];
-        for (int x = 0; x < index; x++){
-        	divMsgs[x] = tempArr[x];
-        }
+        
+        String[] divMsgs = Arrays.copyOf(tempArr, index);
         return divMsgs;
     }
 
