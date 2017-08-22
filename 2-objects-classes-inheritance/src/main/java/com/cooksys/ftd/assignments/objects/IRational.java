@@ -54,7 +54,10 @@ interface IRational {
 	 *             if the numerator of this rational value is 0
 	 */
 	default IRational invert() throws IllegalStateException {
-		throw new NotImplementedException();
+		if (getNumerator() == 0){
+			throw new IllegalStateException();
+		}
+		return construct(getDenominator(), getNumerator());
 	}
 
 	/**
@@ -69,7 +72,16 @@ interface IRational {
 	 *             if that is null
 	 */
 	default IRational add(IRational that) throws IllegalArgumentException {
-		throw new NotImplementedException();
+		if (that == null){
+			throw new IllegalArgumentException();
+		}
+		int n1, n2, d1, d2;
+		n1 = getNumerator();
+		n2 = that.getNumerator();
+		d1 = getDenominator();
+		d2 = that.getDenominator();
+		
+		return construct( (n1*d2)+(n2*d1), (d1*d2) );
 	}
 
 	/**
@@ -84,7 +96,16 @@ interface IRational {
 	 *             if that is null
 	 */
 	default IRational sub(IRational that) throws IllegalArgumentException {
-		throw new NotImplementedException();
+		if (that == null){
+			throw new IllegalArgumentException();
+		}
+		int n1, n2, d1, d2;
+		n1 = getNumerator();
+		n2 = that.getNumerator();
+		d1 = getDenominator();
+		d2 = that.getDenominator();
+		
+		return construct( (n1*d2)-(n2*d1), (d1*d2) );
 	}
 
 	/**
@@ -99,10 +120,19 @@ interface IRational {
 	 *             if that is null
 	 */
 	default IRational mul(IRational that) throws IllegalArgumentException {
-		throw new NotImplementedException();
+		if (that == null){
+			throw new IllegalArgumentException();
+		}
+		int n1, n2, d1, d2;
+		n1 = getNumerator();
+		n2 = that.getNumerator();
+		d1 = getDenominator();
+		d2 = that.getDenominator();
+		
+		return construct( n1*n2, d1*d2 );
 	}
-
 	/**
+
 	 * division of rational values
 	 * <p>
 	 * definition: `(n1 / d1) / (n2 / d2) = (n1 * d2) / (d1 * n2)`
@@ -114,6 +144,15 @@ interface IRational {
 	 *             if that is null or if the numerator of that is 0
 	 */
 	default IRational div(IRational that) throws IllegalArgumentException {
-		throw new NotImplementedException();
+		if ( (that == null) || (that.getNumerator()==0) ){
+			throw new IllegalArgumentException();
+		}
+		int n1, n2, d1, d2;
+		n1 = getNumerator();
+		n2 = that.getNumerator();
+		d1 = getDenominator();
+		d2 = that.getDenominator();
+		
+		return construct( n1*d2, d1*n2);
 	}
 }
