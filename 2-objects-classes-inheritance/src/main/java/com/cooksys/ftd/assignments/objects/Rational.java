@@ -1,6 +1,5 @@
 package com.cooksys.ftd.assignments.objects;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Rational implements IRational {
 	int numerator, denominator;
