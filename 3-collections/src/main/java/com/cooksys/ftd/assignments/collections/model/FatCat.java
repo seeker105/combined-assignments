@@ -1,10 +1,12 @@
 package com.cooksys.ftd.assignments.collections.model;
 
+import java.util.Set;
+
 public class FatCat implements Capitalist {
 	
 	private String name;
 	private int salary;
-	private FatCat owner; 
+	private FatCat owner;
 
 	public FatCat(String name, int salary) {
         this.name = name;
@@ -98,4 +100,11 @@ public class FatCat implements Capitalist {
 		return true;
 	}
     
+	/**
+	 * @return a new FatCat object
+	 * with the same name, salary and owner (Parent) values
+	 */		
+	public FatCat clone(){
+		return new FatCat(name, salary, owner);
+	}
 }

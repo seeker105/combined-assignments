@@ -98,4 +98,12 @@ public class WageSlave implements Capitalist {
 		}
 		return true;
 	}
+	
+	/**
+	 * @return a new WageSlave object
+	 * with the same name, salary and owner (Parent) values
+	 */		
+	public WageSlave clone(){
+		return new WageSlave(name, salary, owner);
+	}
 }

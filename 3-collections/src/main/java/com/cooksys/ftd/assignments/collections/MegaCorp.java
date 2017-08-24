@@ -9,11 +9,7 @@ import java.util.*;
 
 public class MegaCorp implements Hierarchy<Capitalist, FatCat> {
 	
-	HashSet<Capitalist> staffList;
-	
-	public MegaCorp(){
-		staffList = new HashSet<Capitalist>();
-	}
+	HashSet<Capitalist> staffList = new HashSet<>();
 
     /**
      * Adds a given element to the hierarchy.
@@ -38,23 +34,13 @@ public class MegaCorp implements Hierarchy<Capitalist, FatCat> {
     	if (capitalist == null){
     		return false;
     	}
-    	if (staffList.contains(capitalist)){
-    		return false;
-    	}
-    	if (capitalist.hasParent() && !staffList.contains(capitalist.getParent())){
-    		add(capitalist.getParent());
-    		return staffList.add(capitalist);
-    	}
-    	if (!capitalist.hasParent() && capitalist instanceof FatCat){
-    		return staffList.add(capitalist);
-    	}
-        if (!capitalist.hasParent() && !(capitalist instanceof FatCat)) {
-        	return false;
-        }
     	if (capitalist.hasParent()){
+    		if ( !has(capitalist.getParent())){
+    			add(capitalist.getParent());
+    		}
     		return staffList.add(capitalist);
     	} else {
-    		if (isParent(capitalist)){
+    		if (capitalist instanceof FatCat){
     			return staffList.add(capitalist);
     		} else {
     			return false;
@@ -77,9 +63,6 @@ public class MegaCorp implements Hierarchy<Capitalist, FatCat> {
      */
     @Override
     public Set<Capitalist> getElements() {
-        if (staffList.isEmpty()){
-        	return new HashSet<Capitalist>();
-        }
         return new HashSet<Capitalist>(staffList);
     }
 
@@ -92,15 +75,16 @@ public class MegaCorp implements Hierarchy<Capitalist, FatCat> {
     	Capitalist cap;
     	FatCat fc, newFatCat;
     	Set<FatCat> newSet = new HashSet<FatCat>();
-        Iterator<Capitalist> it = staffList.iterator();
-        while (it.hasNext()){
-        	cap = it.next();
-        	if (cap instanceof FatCat){
-        		fc = (FatCat)cap;
-        		newFatCat = new FatCat(fc.getName(), fc.getSalary(), fc.getParent());
-        		newSet.add(newFatCat);
-        	}
-        }
+    	
+    	Iterator<Capitalist> it = staffList.iterator();
+    	while (it.hasNext()){
+    		cap = it.next();
+    		if (cap instanceof FatCat){
+    			fc = (FatCat)cap;
+    			newFatCat = fc.clone();
+    			newSet.add(newFatCat);
+    		}
+    	}
         return newSet;
     }
 
@@ -112,7 +96,7 @@ public class MegaCorp implements Hierarchy<Capitalist, FatCat> {
      */
     @Override
     public Set<Capitalist> getChildren(FatCat fatCat) {
-    	Capitalist cap, newCap, parent;
+    	Capitalist cap, newCap;
     	Set<Capitalist> newSet = new HashSet<Capitalist>();
     	
     	if (fatCat == null) {
@@ -122,19 +106,10 @@ public class MegaCorp implements Hierarchy<Capitalist, FatCat> {
         Iterator<Capitalist> it = staffList.iterator();
         while (it.hasNext()){
         	cap = it.next();
-        	
         	if (cap.hasParent() && cap.getParent().equals(fatCat)){
-        		if (cap instanceof FatCat){
-        			newCap = new FatCat(cap.getName(), cap.getSalary(), fatCat);
-        		} else {
-        			newCap = new WageSlave(cap.getName(), cap.getSalary(), fatCat);
-        		}
+        		newCap = cap.clone();
         		newSet.add(newCap);
         	}
-//        	if (cap instanceof WageSlave){
-//        		newCap = new WageSlave(cap.getName(), cap.getSalary(), fatCat);
-//        		newSet.add(newCap);
-//        	}
         }
         return newSet;
     }
@@ -175,27 +150,10 @@ public class MegaCorp implements Hierarchy<Capitalist, FatCat> {
         while (capitalist != null && capitalist.hasParent()){
         	parent = capitalist.getParent();
         	if (has(parent)){
-        		fcArr.add( new FatCat(parent.getName(), parent.getSalary(), parent.getParent()) );
+        		fcArr.add( parent.clone() );
         	}
         	capitalist = parent;
         }
         return fcArr;
-    }
-    
-    
-    /**
-     * @param capitalist
-     * @return true if the given element is of type FatCat
-     * and has at least one child element of any type
-     */
-    private boolean isParent(Capitalist capitalist){
-    	if ( !(capitalist instanceof FatCat) ){
-    		return false;
-    	}
-    	FatCat fc = (FatCat)capitalist;
-    	if (getChildren(fc).size() == 0){
-    		return false;
-    	}
-    	return true;
     }
 }
