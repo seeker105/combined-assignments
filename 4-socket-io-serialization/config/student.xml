@@ -1,1 +1,5 @@
-<student/>
+<student firstName="John" lastName="Smith">
+	<favorite-ide>Eclipse 2025</favorite-ide>
+	<favorite-language>Ruby</favorite-language>
+	<favorite-paradigm>OOP</favorite-paradigm>
+</student>

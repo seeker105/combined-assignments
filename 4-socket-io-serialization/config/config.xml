@@ -1,1 +1,5 @@
-<config/>
+<config>
+	<local port="4457"></local>
+	<remote host="127.0.0.1" port="4457"></remote>
+	<student-file-path>C:/Users/ftd-17/code/combined-assignments/4-socket-io-serialization/config/student.xml</student-file-path>
+</config>
