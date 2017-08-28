@@ -61,9 +61,7 @@ public class Server extends Utils {
     	
     	
     	try {
-			if (localConfig == null){
-				throw new Exception();
-			}
+			if (localConfig == null) throw new Exception();
 			servSocket = new ServerSocket(localConfig.getPort());
 			System.out.println("Waiting for connection...");
 			socket = servSocket.accept();

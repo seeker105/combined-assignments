@@ -42,9 +42,7 @@ public class Client extends Utils {
 
     	
 		try {
-			if (remoteConfig == null){
-				throw new Exception();
-			}
+			if (remoteConfig == null) throw new Exception();
 			socket = new Socket(remoteConfig.getHost(), remoteConfig.getPort());
 		} catch (IOException e) {
 			System.out.println("Failed to create Client to Server socket");
