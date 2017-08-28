@@ -24,7 +24,28 @@ public class Server extends Utils {
      * @return a {@link Student} object unmarshalled from the given file path
      */
     public static Student loadStudent(String studentFilePath, JAXBContext jaxb) {
-        return null; // TODO
+    	Student student = null;
+    	Unmarshaller unMarshaller = null;
+    	
+		File studentFile = new File(studentFilePath);
+		
+		try {
+			unMarshaller = jaxb.createUnmarshaller();
+		} catch (JAXBException e1) {
+			System.out.println("Failed to create Unmarshaller in loadStudent method, Server class");
+			e1.printStackTrace();
+		}
+		
+		try {
+			if (unMarshaller != null) {
+				student = (Student) unMarshaller.unmarshal(studentFile);
+			}
+		} catch (JAXBException e) {
+			System.out.println("Failed to unmarshall Student object in loadStudent method, Server class");
+			e.printStackTrace();
+		}
+		
+		return student;
     }
 
     /**
@@ -43,14 +64,12 @@ public class Server extends Utils {
     	ServerSocket servSocket = null;
     	Socket socket = null;
     	Student student = null;
-    	Unmarshaller unMarshaller = null;
     	Marshaller marshaller = null;
     	Config config = null;
     	LocalConfig localConfig=null;
     	JAXBContext context = createJAXBContext();
     	
     	try {
-			unMarshaller = context.createUnmarshaller();
 			marshaller = context.createMarshaller();
 			config = loadConfig("C:/Users/ftd-17/code/combined-assignments/4-socket-io-serialization/config/config.xml", context);
 			localConfig = config.getLocal();
@@ -82,25 +101,22 @@ public class Server extends Utils {
 		// Client connects...
 		
     	// Read the student file
-		File studentFile = new File(config.getStudentFilePath());
-		
-		try {
-			student = (Student) unMarshaller.unmarshal(studentFile);
-		} catch (JAXBException e) {
-			System.out.println("Failed to unmarshall Student object");
-			e.printStackTrace();
-		}
+		student = loadStudent(config.getStudentFilePath(), context);
 		
 		// Re-marshall the Student data and send it to the Client over the Socket
 		try {
+			if (student == null) {
+				throw new Exception();
+			}
 			marshaller.marshal(student, socket.getOutputStream());
-		} catch (IOException e) {
-			System.out.println("Failed to create Client's PrintWriter");
-			e.printStackTrace();
-		} catch (JAXBException j) {
+		}  catch (JAXBException e) {
 			System.out.println("Failed to Marshal the Student object to the Client");
-			j.printStackTrace();
-		} finally {
+			e.printStackTrace();
+		} catch (Exception e){
+			System.out.println("Student object was null in Server class");
+			e.printStackTrace();
+		}
+		finally {
 			try {
 				if (socket != null) socket.close();
 			} catch (IOException e) {
