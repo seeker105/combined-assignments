@@ -106,14 +106,17 @@ public class Server extends Utils {
 		// Re-marshall the Student data and send it to the Client over the Socket
 		try {
 			if (student == null) {
-				throw new Exception();
+				throw new NullPointerException();
 			}
 			marshaller.marshal(student, socket.getOutputStream());
 		}  catch (JAXBException e) {
 			System.out.println("Failed to Marshal the Student object to the Client");
 			e.printStackTrace();
-		} catch (Exception e){
+		} catch (NullPointerException e){
 			System.out.println("Student object was null in Server class");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("I/O Failure. Could not get OutputStream from Socket");
 			e.printStackTrace();
 		}
 		finally {
